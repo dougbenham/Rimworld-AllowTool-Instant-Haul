@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Allow Tool - Instant Haul</name>
+	<author>Doug</author>
+	<description>If god-mode is enabled, using 'haul urgently' will immediately transport the target.</description>
+	<supportedVersions>
+		<li>1.2</li>
+	</supportedVersions>
+	<packageId>Doug.AllowTool.InstantHaul</packageId>
+	<modDependencies>
+		<li>
+			<packageId>UnlimitedHugs.AllowTool</packageId>
+			<displayName>AllowTool</displayName>
+			<downloadUrl>https://ludeon.com/forums/index.php?topic=17218.0</downloadUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>UnlimitedHugs.AllowTool</li>
+	</loadAfter>
+</ModMetaData>
