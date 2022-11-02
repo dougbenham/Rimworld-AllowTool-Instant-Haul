@@ -4,7 +4,7 @@
 	<author>Doug</author>
 	<description>If god-mode is enabled, using 'haul urgently' will immediately transport the target.</description>
 	<supportedVersions>
-		<li>1.2</li>
+		<li>1.4</li>
 	</supportedVersions>
 	<packageId>Doug.AllowTool.InstantHaul</packageId>
 	<modDependencies>
@@ -13,6 +13,11 @@
 			<displayName>AllowTool</displayName>
 			<downloadUrl>https://ludeon.com/forums/index.php?topic=17218.0</downloadUrl>
 		</li>
+        <li>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+        </li>
 	</modDependencies>
 	<loadAfter>
 		<li>UnlimitedHugs.AllowTool</li>
