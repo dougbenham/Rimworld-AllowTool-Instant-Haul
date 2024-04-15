@@ -166,14 +166,14 @@ namespace AllowToolInstantHaul
             
             if (!(bool) _noStorageBlockersInMethod.Invoke(null, new object[] { c, map, t }))
             {
-                Log.Error("Storage blockers found at " + c + " for " + t);
+                Log.Warning("Storage blockers found at " + c + " for " + t);
                 return false;
             }
             if (carrier != null)
             {
                 if (!carrier.CanReserveNew(c))
                 {
-                    Log.Error("Carrier " + carrier + " can't reserve new at " + c);
+                    Log.Warning("Carrier " + carrier + " can't reserve new at " + c);
                     return false;
                 }
             }
@@ -183,7 +183,7 @@ namespace AllowToolInstantHaul
                 if (pawn != null)
                 {
                     // Pawn Drone, ProjectRimFactory.Drones.Pawn_Drone, PRFDrone, Dorks
-                    Log.Error("Pawn " + pawn + ", " + pawn.def.thingClass.FullName + ", " + pawn.def.defName + ", " + pawn.Faction + " already reserved " + c);
+                    Log.Warning("Pawn " + pawn + ", " + pawn.def.thingClass.FullName + ", " + pawn.def.defName + ", " + pawn.Faction + " already reserved " + c);
                     return false;
                 }
             }
@@ -197,7 +197,7 @@ namespace AllowToolInstantHaul
             {
                 if (thingList[i] is IConstructible && GenConstruct.BlocksConstruction(thingList[i], t))
                 {
-                    Log.Error("BlocksConstruction at " + c);
+                    Log.Warning("BlocksConstruction at " + c);
                     return false;
                 }
             }
