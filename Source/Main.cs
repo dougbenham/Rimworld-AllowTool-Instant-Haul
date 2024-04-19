@@ -184,7 +184,7 @@ namespace AllowToolInstantHaul
                 {
                     // Pawn Drone, ProjectRimFactory.Drones.Pawn_Drone, PRFDrone, Dorks
                     Log.Warning("Pawn " + pawn + ", " + pawn.def.thingClass.FullName + ", " + pawn.def.defName + ", " + pawn.Faction + " already reserved " + c);
-                    return false;
+                    //return false;
                 }
             }
             if (c.ContainsStaticFire(map))
