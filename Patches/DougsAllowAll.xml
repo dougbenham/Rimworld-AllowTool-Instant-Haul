@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<Operation Class="XmlExtensions.PatchOperationSafeAddOrReplace">
+		<xpath>Defs/ThingDef[comps/li[@Class="LWM.DeepStorage.Properties"]]</xpath>
+		<safetyDepth>2</safetyDepth>
+		<value>
+			<building>
+				<fixedStorageSettings>
+					<filter Inherit="false">
+						<categories>
+							<li>Root</li>
+						</categories>
+					</filter>
+				</fixedStorageSettings>
+			</building>
+		</value>
+	</Operation>
+</Patch>

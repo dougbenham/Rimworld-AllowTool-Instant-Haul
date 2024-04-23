@@ -21,5 +21,10 @@
 	</modDependencies>
 	<loadAfter>
 		<li>UnlimitedHugs.AllowTool</li>
+		
+		<li>imranfish.xmlextensions</li>
+		<li>LWM.DeepStorage</li>
+		<li>LWM.DeepStorageHotfix</li>
+		<li>rimfridge.kv.rw</li>
 	</loadAfter>
 </ModMetaData>
