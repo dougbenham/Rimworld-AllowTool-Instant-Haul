@@ -6,6 +6,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace AllowToolInstantHaul
 {
@@ -18,7 +19,59 @@ namespace AllowToolInstantHaul
             harmony.PatchAll();
         }
     }
+	
+    [HarmonyPatch(typeof(Thing), "GetGizmos")]
+    public static class Thing_GetGizmos_Patch
+    {
+        public static void Postfix(Thing __instance, ref IEnumerable<Gizmo> __result)
+        {
+	        if (DebugSettings.ShowDevGizmos)
+	        {
+		        __result = __result.Concat(new Command_Action
+		        {
+			        defaultLabel = "DEV: Teleport",
+					hotKey = KeyBindingDefOf.Misc10,
+                    action = delegate()
+			        {
+                        var targetParams = new TargetingParameters();
+				        targetParams.canTargetLocations = true;
+				        targetParams.canTargetSelf = false;
+				        targetParams.canTargetPawns = false;
+				        targetParams.canTargetFires = false;
+				        targetParams.canTargetBuildings = true;
+				        targetParams.canTargetItems = true;
+                        targetParams.validator = target => true;
+                        Find.Targeter.BeginTargeting(targetParams, lti =>
+                        {
+	                        if (__instance.Spawned)
+		                        __instance.DeSpawn();
 
+                            if (__instance is Pawn pawn)
+	                        {
+		                        if (Find.CurrentMap == pawn.Map)
+			                        __instance.Position = lti.Cell;
+		                        else
+		                        {
+			                        pawn.teleporting = true;
+			                        GenSpawn.Spawn(pawn, lti.Cell, Find.CurrentMap);
+			                        pawn.teleporting = false;
+		                        }
+
+		                        pawn.Notify_Teleported();
+	                        }
+                            else
+	                            GenSpawn.Spawn(__instance, lti.Cell, Find.CurrentMap);
+
+                            Find.Selector.Select(__instance, false);
+
+                            SoundDefOf.Broadshield_Startup.PlayOneShot(SoundInfo.InMap(__instance));
+                        });
+			        }
+		        });
+            }
+        }
+    }
+	
     [HarmonyPatch(typeof(Designator_HaulUrgently), "DesignateThing")]
     public static class Designator_HaulUrgently_DesignateThing_Patch
     {
