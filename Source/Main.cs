@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using AllowTool;
 using HarmonyLib;
@@ -43,28 +44,31 @@ namespace AllowToolInstantHaul
                         targetParams.validator = target => true;
                         Find.Targeter.BeginTargeting(targetParams, lti =>
                         {
-	                        if (__instance.Spawned)
-		                        __instance.DeSpawn();
-
-                            if (__instance is Pawn pawn)
+	                        foreach (var thing in Find.Selector.SelectedObjects.OfType<Thing>().ToArray())
 	                        {
-		                        if (Find.CurrentMap == pawn.Map)
-			                        __instance.Position = lti.Cell;
-		                        else
+		                        if (thing.Spawned)
+			                        thing.DeSpawn();
+
+		                        if (thing is Pawn pawn)
 		                        {
-			                        pawn.teleporting = true;
-			                        GenSpawn.Spawn(pawn, lti.Cell, Find.CurrentMap);
-			                        pawn.teleporting = false;
+			                        if (Find.CurrentMap == pawn.Map)
+				                        thing.Position = lti.Cell;
+			                        else
+			                        {
+				                        pawn.teleporting = true;
+				                        GenSpawn.Spawn(pawn, lti.Cell, Find.CurrentMap);
+				                        pawn.teleporting = false;
+			                        }
+
+			                        pawn.Notify_Teleported();
 		                        }
+		                        else
+			                        GenSpawn.Spawn(thing, lti.Cell, Find.CurrentMap);
 
-		                        pawn.Notify_Teleported();
+		                        Find.Selector.Select(thing, false);
 	                        }
-                            else
-	                            GenSpawn.Spawn(__instance, lti.Cell, Find.CurrentMap);
 
-                            Find.Selector.Select(__instance, false);
-
-                            SoundDefOf.Broadshield_Startup.PlayOneShot(SoundInfo.InMap(__instance));
+	                        SoundDefOf.Broadshield_Startup.PlayOneShot(SoundInfo.InMap(__instance));
                         });
 			        }
 		        });
